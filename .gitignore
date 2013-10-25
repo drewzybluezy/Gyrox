@@ -4,5 +4,6 @@ gen/
 libs/
 obj/
 .classpath
+.metadata
 .project
 .settings/
