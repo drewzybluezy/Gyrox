@@ -1,5 +1,5 @@
 
-package com.dmurphy.gyrox;
+package com.dmurphy.gyrox.view;
 
 import javax.microedition.khronos.egl.EGLConfig;
 import javax.microedition.khronos.opengles.GL10;

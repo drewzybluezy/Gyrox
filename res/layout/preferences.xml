@@ -7,12 +7,12 @@
         android:title="Player Options"
         android:key="first_category">
     
-		<ListPreference    android:title="Bike Colour"
-		                   android:summary="Select which colour bike you would like to play as (changes won't take effect until a new game is started)"
-		                   android:key="playerBike"
+		<ListPreference    android:title="Spaceship Color"
+		                   android:summary="Select which color ship you would like to play as (changes won't take effect until a new game is started)"
+		                   android:key="shipColor"
 		                   android:defaultValue="0"
-		                   android:entries="@array/bikeArray"
-		                   android:entryValues="@array/playerValues" />       
+		                   android:entries="@array/shipColors"
+		                   android:entryValues="@array/shipValues" />       
 	    
 	</PreferenceCategory>
 

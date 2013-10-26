@@ -1,17 +1,21 @@
 
 
-package com.dmurphy.gyrox.game;
+package com.dmurphy.gyrox.entity;
 
-import java.nio.FloatBuffer;
 import java.util.ArrayList;
 import java.util.Random;
 
 import javax.microedition.khronos.opengles.GL10;
 
-import android.util.Log;
-
+import com.dmurphy.gyrox.game.GyroxMain;
+import com.dmurphy.gyrox.model.GLTexture;
+import com.dmurphy.gyrox.model.Model;
+import com.dmurphy.gyrox.model.Segment;
+import com.dmurphy.gyrox.model.Vec;
 import com.dmurphy.gyrox.sound.SoundManager;
-import com.dmurphy.gyrox.video.*;
+import com.dmurphy.gyrox.ui.Camera;
+import com.dmurphy.gyrox.ui.HUD;
+import com.dmurphy.gyrox.world.Lighting;
 
 public class Player {
 
@@ -269,10 +273,10 @@ public class Player {
 		
 		boolean retValue;
 		
-		v1 = cam._target.sub(cam._cam);
+		v1 = cam.getTarget().sub(cam.getCam());
 		v1.normalize();
 		
-		v2 = cam._cam.sub(tmp);
+		v2 = cam.getCam().sub(tmp);
 		
 		d = v2.length();
 		
@@ -282,7 +286,7 @@ public class Player {
 			retValue = false;
 		}
 		else {
-			v2 = tmp.sub(cam._cam);
+			v2 = tmp.sub(cam.getCam());
 			v2.normalize();
 			
 			s = v1.dot(v2);

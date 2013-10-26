@@ -1,10 +1,14 @@
 
 
-package com.dmurphy.gyrox.video;
+package com.dmurphy.gyrox.entity;
 
 import java.nio.FloatBuffer;
 
 import javax.microedition.khronos.opengles.GL10;
+
+import com.dmurphy.gyrox.model.GLTexture;
+import com.dmurphy.gyrox.model.Vec;
+import com.dmurphy.gyrox.util.GraphicUtils;
 
 public class Explosion {
 

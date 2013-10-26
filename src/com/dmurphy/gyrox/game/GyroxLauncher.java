@@ -1,6 +1,9 @@
 
 
-package com.dmurphy.gyrox;
+package com.dmurphy.gyrox.game;
+
+import com.dmurphy.gyrox.util.Preferences;
+import com.dmurphy.gyrox.view.OpenGLView;
 
 import android.app.Activity;
 import android.content.Intent;

@@ -8,14 +8,25 @@ import java.util.ArrayList;
 import javax.microedition.khronos.opengles.GL10;
 
 import android.content.Context;
-import android.os.Handler;
 import android.os.SystemClock;
 
 import com.dmurphy.gyrox.R;
-import com.dmurphy.gyrox.game.Camera.CamType;
+import com.dmurphy.gyrox.entity.Note;
+import com.dmurphy.gyrox.entity.Player;
+import com.dmurphy.gyrox.entity.SpeedBoost;
+import com.dmurphy.gyrox.model.GLTexture;
+import com.dmurphy.gyrox.model.Model;
+import com.dmurphy.gyrox.model.Segment;
+import com.dmurphy.gyrox.model.Video;
 import com.dmurphy.gyrox.sound.SoundManager;
-import com.dmurphy.gyrox.video.*;
-import com.dmurphy.gyrox.video.Lighting.LightType;
+import com.dmurphy.gyrox.ui.Camera;
+import com.dmurphy.gyrox.ui.Camera.CamType;
+import com.dmurphy.gyrox.ui.HUD;
+import com.dmurphy.gyrox.util.GraphicUtils;
+import com.dmurphy.gyrox.util.UserPrefs;
+import com.dmurphy.gyrox.world.Lighting;
+import com.dmurphy.gyrox.world.Lighting.LightType;
+import com.dmurphy.gyrox.world.WorldGraphics;
 
 
 public class GyroxMain {

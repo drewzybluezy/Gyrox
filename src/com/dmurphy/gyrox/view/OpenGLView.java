@@ -1,6 +1,7 @@
 
 
-package com.dmurphy.gyrox;
+package com.dmurphy.gyrox.view;
+
 
 import android.content.Context;
 import android.opengl.GLSurfaceView;

@@ -1,6 +1,6 @@
 
 
-package com.dmurphy.gyrox.video;
+package com.dmurphy.gyrox.model;
 
 public class Vec {
 

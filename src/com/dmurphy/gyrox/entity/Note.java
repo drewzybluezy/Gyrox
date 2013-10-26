@@ -1,15 +1,16 @@
-package com.dmurphy.gyrox.game;
+package com.dmurphy.gyrox.entity;
 
 import java.util.Random;
 
 import javax.microedition.khronos.opengles.GL10;
 
-import com.dmurphy.gyrox.video.GLTexture;
-import com.dmurphy.gyrox.video.HUD;
-import com.dmurphy.gyrox.video.Lighting;
-import com.dmurphy.gyrox.video.Model;
-import com.dmurphy.gyrox.video.Segment;
-import com.dmurphy.gyrox.video.Vec;
+import com.dmurphy.gyrox.model.GLTexture;
+import com.dmurphy.gyrox.model.Model;
+import com.dmurphy.gyrox.model.Segment;
+import com.dmurphy.gyrox.model.Vec;
+import com.dmurphy.gyrox.ui.Camera;
+import com.dmurphy.gyrox.ui.HUD;
+import com.dmurphy.gyrox.world.Lighting;
 
 public class Note {
 
@@ -100,10 +101,10 @@ public class Note {
 		
 		boolean retValue;
 		
-		v1 = cam._target.sub(cam._cam);
+		v1 = cam.getTarget().sub(cam.getCam());
 		v1.normalize();
 		
-		v2 = cam._cam.sub(tmp);
+		v2 = cam.getCam().sub(tmp);
 		
 		d = v2.length();
 		
@@ -113,7 +114,7 @@ public class Note {
 			retValue = false;
 		}
 		else {
-			v2 = tmp.sub(cam._cam);
+			v2 = tmp.sub(cam.getCam());
 			v2.normalize();
 			
 			s = v1.dot(v2);

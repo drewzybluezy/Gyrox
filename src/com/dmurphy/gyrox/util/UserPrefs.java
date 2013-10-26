@@ -1,12 +1,13 @@
 
 
-package com.dmurphy.gyrox.game;
+package com.dmurphy.gyrox.util;
 
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 
-import com.dmurphy.gyrox.game.Camera;
+import com.dmurphy.gyrox.ui.Camera;
+import com.dmurphy.gyrox.ui.Camera.CamType;
 
 public class UserPrefs {
 
@@ -30,7 +31,6 @@ public class UserPrefs {
 	
 	private boolean mFPS;
 	
-	private int mNumOfPlayers;
 	private float mGridSize;
 	private float mSpeed;
 	private int mPlayerColorIndex;
@@ -69,12 +69,11 @@ public class UserPrefs {
 		mMusic = prefs.getBoolean("musicOption", true);
 		mSFX = prefs.getBoolean("sfxOption", true);
 		mFPS = prefs.getBoolean("fpsOption", false);
-		mNumOfPlayers = Integer.valueOf(prefs.getString("playerNumber", "4"));
 		gridIndex = Integer.valueOf(prefs.getString("arenaSize", "1"));
 		mGridSize = C_GRID_SIZES[gridIndex];
 		speedIndex = Integer.valueOf(prefs.getString("gameSpeed", "1"));
 		mSpeed = C_SPEED[speedIndex];
-		mPlayerColorIndex = Integer.valueOf(prefs.getString("playerBike","0"));
+		mPlayerColorIndex = Integer.valueOf(prefs.getString("shipColor","0"));
 	}
 	
 	public Camera.CamType CameraType() {	

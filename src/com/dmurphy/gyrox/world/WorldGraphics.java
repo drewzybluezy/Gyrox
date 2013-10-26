@@ -1,6 +1,6 @@
 
 
-package com.dmurphy.gyrox.video;
+package com.dmurphy.gyrox.world;
 
 import java.nio.ByteBuffer;
 import java.nio.FloatBuffer;
@@ -10,6 +10,8 @@ import javax.microedition.khronos.opengles.GL10;
 import android.content.Context;
 
 import com.dmurphy.gyrox.R;
+import com.dmurphy.gyrox.model.GLTexture;
+import com.dmurphy.gyrox.util.GraphicUtils;
 
 public class WorldGraphics {
 

@@ -1,6 +1,6 @@
 
 
-package com.dmurphy.gyrox.video;
+package com.dmurphy.gyrox.util;
 
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;

@@ -1,5 +1,5 @@
 
-package com.dmurphy.gyrox.video;
+package com.dmurphy.gyrox.model;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -16,7 +16,8 @@ import javax.microedition.khronos.opengles.GL10;
 import android.content.Context;
 import android.util.Log;
 
-import com.dmurphy.gyrox.video.Material.ColourType;
+import com.dmurphy.gyrox.model.Material.ColourType;
+import com.dmurphy.gyrox.util.GraphicUtils;
 
 public class Model {
 

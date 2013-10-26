@@ -1,6 +1,7 @@
 
 
-package com.dmurphy.gyrox.video;
+package com.dmurphy.gyrox.model;
+
 
 public class Segment {
 	public Vec vStart = new Vec();

@@ -1,16 +1,16 @@
-package com.dmurphy.gyrox.game;
+package com.dmurphy.gyrox.entity;
 
 import java.nio.FloatBuffer;
 import java.util.Random;
 
 import javax.microedition.khronos.opengles.GL10;
 
-import com.dmurphy.gyrox.video.GraphicUtils;
-import com.dmurphy.gyrox.video.Lighting;
-import com.dmurphy.gyrox.video.Model;
-import com.dmurphy.gyrox.video.Segment;
-import com.dmurphy.gyrox.video.Vec;
-import com.dmurphy.gyrox.video.Lighting.LightType;
+import com.dmurphy.gyrox.model.Model;
+import com.dmurphy.gyrox.model.Segment;
+import com.dmurphy.gyrox.model.Vec;
+import com.dmurphy.gyrox.util.GraphicUtils;
+import com.dmurphy.gyrox.world.Lighting;
+import com.dmurphy.gyrox.world.Lighting.LightType;
 
 public class SpeedBoost {
 

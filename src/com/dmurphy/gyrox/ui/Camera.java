@@ -1,13 +1,14 @@
 
 
-package com.dmurphy.gyrox.game;
+package com.dmurphy.gyrox.ui;
 
 import java.nio.FloatBuffer;
 
 import javax.microedition.khronos.opengles.GL10;
 
-import com.dmurphy.gyrox.video.GraphicUtils;
-import com.dmurphy.gyrox.video.Vec;
+import com.dmurphy.gyrox.entity.Player;
+import com.dmurphy.gyrox.model.Vec;
+import com.dmurphy.gyrox.util.GraphicUtils;
 
 public class Camera {
 
@@ -19,8 +20,8 @@ public class Camera {
 	int _type;
 	
 	Player _PlayerData;
-	Vec _target = new Vec();
-	Vec _cam = new Vec();
+	private Vec target = new Vec();
+	private Vec cam = new Vec();
 	float _movement[] = new float[4]; // indices CAM_R, CAM_CHI, CAM_PHI, CAM_PHI_OFFSET
 	
 	private static final float CAM_CIRCLE_DIST = 12.0f;
@@ -96,13 +97,13 @@ public class Camera {
 				break;
 		}
 		
-		_target.v[0] = PlayerData.getXpos();
-		_target.v[1] = PlayerData.getYpos();
-		_target.v[2] = 0.0f;
+		getTarget().v[0] = PlayerData.getXpos();
+		getTarget().v[1] = PlayerData.getYpos();
+		getTarget().v[2] = 0.0f;
 		
-		_cam.v[0] = PlayerData.getXpos()  + CAM_CIRCLE_DIST;
-		_cam.v[1] = PlayerData.getYpos();
-		_cam.v[2] = CAM_CIRCLE_Z;
+		getCam().v[0] = PlayerData.getXpos()  + CAM_CIRCLE_DIST;
+		getCam().v[1] = PlayerData.getYpos();
+		getCam().v[2] = CAM_CIRCLE_Z;
 		
 	}
 	
@@ -219,18 +220,18 @@ public class Camera {
 				break;
 		}
 		
-		_cam.v[0] = dest[0];
-		_cam.v[1] = dest[1];
-		_cam.v[2] = dest[2];
+		getCam().v[0] = dest[0];
+		getCam().v[1] = dest[1];
+		getCam().v[2] = dest[2];
 		
-		_target.v[0] = tdest[0];
-		_target.v[1] = tdest[1];
-		_target.v[2] = tdest[2];
+		getTarget().v[0] = tdest[0];
+		getTarget().v[1] = tdest[1];
+		getTarget().v[2] = tdest[2];
 		
 	}
 	
 	public FloatBuffer ReturnCamBuffer() {
-		return GraphicUtils.ConvToFloatBuffer(_cam.v);
+		return GraphicUtils.ConvToFloatBuffer(getCam().v);
 	}
 	
 	public void doCameraMovement(Player PlayerData, long CurrentTime, long dt) {
@@ -242,7 +243,7 @@ public class Camera {
 		Vec Up = new Vec(0.0f, 0.0f, 1.0f);
 		Vec x,y,z;
 		
-		z = _cam.sub(_target);
+		z = getCam().sub(getTarget());
 		z.normalize();
 		x = Up.cross(z);
 		y = z.cross(x);
@@ -273,7 +274,23 @@ public class Camera {
 		gl.glMultMatrixf(M);
 		
 		// Translate Eye to origin
-		gl.glTranslatef(-_cam.v[0], -_cam.v[1], -_cam.v[2]);
+		gl.glTranslatef(-getCam().v[0], -getCam().v[1], -getCam().v[2]);
+	}
+
+	public Vec getCam() {
+		return cam;
+	}
+
+	public void setCam(Vec cam) {
+		this.cam = cam;
+	}
+
+	public Vec getTarget() {
+		return target;
+	}
+
+	public void setTarget(Vec target) {
+		this.target = target;
 	}
 	
 }

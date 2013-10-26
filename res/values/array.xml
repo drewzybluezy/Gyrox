@@ -1,13 +1,13 @@
 <resources>
-<string-array name="bikeArray">
-    <item>Blue Bike</item>
-    <item>Yellow Bike</item>
-    <item>Red Bike</item>
-    <item>Grey Bike</item>
-    <item>Green Bike</item>
-    <item>Purple Bike</item>
+<string-array name="shipColors">
+    <item>Blue</item>
+    <item>Orange</item>
+    <item>Red</item>
+    <item>Grey</item>
+    <item>Green</item>
+    <item>Purple</item>
 </string-array>
-<string-array name="playerValues">
+<string-array name="shipValues">
     <item>0</item>
     <item>1</item>
     <item>2</item>
@@ -36,20 +36,6 @@
     <item>Small</item>
     <item>Medium</item>
     <item>Large</item>
-</string-array>
-<string-array name="playerNumEntries">
-    <item>6 Players</item>
-    <item>5 Players</item>
-    <item>4 Players (Default)</item>
-    <item>3 Players</item>
-    <item>2 Players</item>
-</string-array>
-<string-array name="playerNumValues">
-    <item>6</item>
-    <item>5</item>
-    <item>4</item>
-    <item>3</item>
-    <item>2</item>
 </string-array>
 <string-array name="gameSpeedEntries">
     <item>Slow</item>

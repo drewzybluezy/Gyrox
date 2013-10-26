@@ -1,6 +1,6 @@
 
 
-package com.dmurphy.gyrox.video;
+package com.dmurphy.gyrox.model;
 
 import javax.microedition.khronos.opengles.GL10;
 
