@@ -37,7 +37,6 @@ public class GyroxLauncher extends Activity {
 	    
         view = new OpenGLView(this, width, height);
         setContentView(view);
-
     }
     
     

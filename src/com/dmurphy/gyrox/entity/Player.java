@@ -5,7 +5,7 @@ import java.util.Random;
 
 import javax.microedition.khronos.opengles.GL10;
 
-import com.dmurphy.gyrox.game.GyroxMain;
+import com.dmurphy.gyrox.game.GameState;
 import com.dmurphy.gyrox.model.GLTexture;
 import com.dmurphy.gyrox.model.Model;
 import com.dmurphy.gyrox.model.Segment;
@@ -101,7 +101,7 @@ public class Player {
 		ship = mesh;
 		score = 0;
 
-		mPlayerColorIndex = GyroxMain.mPrefs.playerColorIndex();
+		mPlayerColorIndex = GameState.mPrefs.playerColorIndex();
 	}
 
 	public void doTurn(int direction, long time) {
@@ -130,7 +130,7 @@ public class Player {
 							+ (time % SPEED_OZ_FREQ) * 2.0f * Math.PI
 							/ SPEED_OZ_FREQ));
 
-			if (GyroxMain.getBoostRemaining() > 0)
+			if (GameState.getBoostRemaining() > 0)
 				t = timeDelta / 100.0f * (speed * 3f) * fs;
 			else
 				t = timeDelta / 100.0f * speed * fs;
@@ -139,8 +139,8 @@ public class Player {
 			trails[trailOffset].vDirection.v[1] += t * DIRS_Y[direction];
 
 			doCrashTestWalls(walls);
-			doCrashTestPickup(GyroxMain.notes, ship);
-			collideBoostTest(GyroxMain.boost, ship);
+			doCrashTestPickup(GameState.notes, ship);
+			collideBoostTest(GameState.boost, ship);
 		} else {
 			if (trailHeight > 0.0f) {
 				trailHeight -= (timeDelta * TRAIL_HEIGHT) / 1000.0f;
@@ -205,10 +205,10 @@ public class Player {
 					speed = 0.0f;
 					explosion = new Explosion(0.0f);
 
-					GyroxMain.endGame();
+					GameState.endGame();
 
-					if (GyroxMain.mPrefs.playSFX())
-						SoundManager.playSound(GyroxMain.CRASH_SOUND, 1.0f);
+					if (GameState.mPrefs.playSFX())
+						SoundManager.playSound(GameState.CRASH_SOUND, 1.0f);
 					break;
 				}
 			}
@@ -359,12 +359,12 @@ public class Player {
 
 			if (dist <= (mesh.getBBoxRadius() + (notes.get(j).getModel()
 					.getBBoxRadius()))) {
-				GyroxMain.removePickup(j);
-				this.addScore(10 * GyroxMain.getMultiplier());
-				GyroxMain.playPickup();
-				GyroxMain.incrementTime(GyroxMain.PICKUP_TIME_INCREMENT
-						* GyroxMain.DIMINISHING_RETURNS);
-				GyroxMain.pickedUp();
+				GameState.removePickup(j);
+				this.addScore(10 * GameState.getMultiplier());
+				GameState.playPickup();
+				GameState.incrementTime(GameState.PICKUP_TIME_INCREMENT
+						* GameState.DIMINISHING_RETURNS);
+				GameState.pickedUp();
 			}
 		}
 	}
@@ -377,8 +377,8 @@ public class Player {
 
 			if (dist <= (mesh.getBBoxRadius() + (boost.get(j).getModel()
 					.getBBoxRadius() * 5f))) {
-				GyroxMain.boost();
-				GyroxMain.playBoost();
+				GameState.boost();
+				GameState.playBoost();
 			}
 		}
 	}

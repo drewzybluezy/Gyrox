@@ -5,7 +5,7 @@ import javax.microedition.khronos.opengles.GL10;
 import android.content.Context;
 
 import com.dmurphy.gyrox.R;
-import com.dmurphy.gyrox.game.GyroxMain;
+import com.dmurphy.gyrox.game.GameState;
 import com.dmurphy.gyrox.model.Font;
 import com.dmurphy.gyrox.model.Video;
 
@@ -48,17 +48,17 @@ public class HUD {
 		gl.glDisable(GL10.GL_DEPTH_TEST);
 		Visual.rasOnly(gl);
 		
-		if(GyroxMain.mPrefs.drawFPS())
+		if(GameState.mPrefs.drawFPS())
 			drawFPS(Visual,dt);
 		
 		drawConsole(Visual);
-		if (GyroxMain.gameOver) drawFinalScore(plyrScore, Visual);
-		if (GyroxMain.gameOver && (GyroxMain.endDelay <= 0)) drawNewGame(Visual);
+		if (GameState.gameOver) drawFinalScore(plyrScore, Visual);
+		if (GameState.gameOver && (GameState.endDelay <= 0)) drawNewGame(Visual);
 		drawScore(plyrScore);
 		drawInstructions(Visual);
 		drawTimeLeft(timeLeft, Visual);
 		drawPickupsLeft(notesLeft, Visual);
-		drawMultiplier(GyroxMain.getMultiplier(), Visual);
+		drawMultiplier(GameState.getMultiplier(), Visual);
 	}
 	
 	public void resetConsole() {

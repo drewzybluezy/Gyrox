@@ -1,6 +1,5 @@
 package com.dmurphy.gyrox.game;
 
-import java.nio.FloatBuffer;
 import java.util.ArrayList;
 
 import javax.microedition.khronos.opengles.GL10;
@@ -12,6 +11,7 @@ import com.dmurphy.gyrox.R;
 import com.dmurphy.gyrox.entity.Note;
 import com.dmurphy.gyrox.entity.Player;
 import com.dmurphy.gyrox.entity.SpeedBoost;
+import com.dmurphy.gyrox.game.StateManager.StateID;
 import com.dmurphy.gyrox.model.GLTexture;
 import com.dmurphy.gyrox.model.Model;
 import com.dmurphy.gyrox.model.Segment;
@@ -20,13 +20,12 @@ import com.dmurphy.gyrox.sound.SoundManager;
 import com.dmurphy.gyrox.ui.Camera;
 import com.dmurphy.gyrox.ui.Camera.CamType;
 import com.dmurphy.gyrox.ui.HUD;
-import com.dmurphy.gyrox.util.GraphicUtils;
 import com.dmurphy.gyrox.util.UserPrefs;
 import com.dmurphy.gyrox.world.Lighting;
 import com.dmurphy.gyrox.world.Lighting.LightType;
 import com.dmurphy.gyrox.world.WorldGraphics;
 
-public class GyroxMain {
+public class GameState implements State {
 
 	// Define Time data
 	public long timeLastFrame;
@@ -60,7 +59,6 @@ public class GyroxMain {
 
 	// Define game textures
 	private GLTexture explodeTex;
-	private GLTexture SplashScreen;
 
 	private Model playerModel;
 	private Model noteModel;
@@ -108,11 +106,12 @@ public class GyroxMain {
 	// Preferences
 	public static UserPrefs mPrefs;
 
-	public GyroxMain() {
+	public void init(Context ctx, GL10 gl, Video video) {
 		initWalls();
-	}
-
-	public void initGame() {
+		
+		this.gl = gl;
+		this.mContext = ctx;
+		this.video = video;
 
 		// Load sounds
 		SoundManager.getInstance();
@@ -171,51 +170,6 @@ public class GyroxMain {
 
 			resetTime();
 		}
-	}
-
-	public void drawSplash(Context ctx, GL10 gl1) {
-		float verts[] = { -1.0f, 1.0f, 0.0f, 1.0f, 1.0f, 0.0f, -1.0f, -1.0f,
-				0.0f, 1.0f, -1.0f, 0.0f };
-
-		float texture[] = { 0.0f, 1.0f, 1.0f, 1.0f, 0.0f, 0.0f, 1.0f, 0.0f };
-
-		gl = gl1;
-		mContext = ctx;
-
-		FloatBuffer vertfb = GraphicUtils.convToFloatBuffer(verts);
-		FloatBuffer texfb = GraphicUtils.convToFloatBuffer(texture);
-
-		gl.glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
-		gl.glClear(GL10.GL_COLOR_BUFFER_BIT | GL10.GL_DEPTH_BUFFER_BIT);
-
-		gl.glEnableClientState(GL10.GL_VERTEX_ARRAY);
-		gl.glEnableClientState(GL10.GL_TEXTURE_COORD_ARRAY);
-
-		gl.glLoadIdentity();
-
-		gl.glEnable(GL10.GL_TEXTURE_2D);
-		if (SplashScreen == null)
-			SplashScreen = new GLTexture(gl, mContext, R.drawable.splash);
-
-		gl.glBindTexture(GL10.GL_TEXTURE_2D, SplashScreen.getTextureID());
-
-		gl.glVertexPointer(3, GL10.GL_FLOAT, 0, vertfb);
-		gl.glTexCoordPointer(2, GL10.GL_FLOAT, 0, texfb);
-		gl.glDrawArrays(GL10.GL_TRIANGLE_STRIP, 0, 4);
-
-		gl.glDisableClientState(GL10.GL_VERTEX_ARRAY);
-		gl.glDisableClientState(GL10.GL_NORMAL_ARRAY);
-		gl.glDisableClientState(GL10.GL_TEXTURE_COORD_ARRAY);
-
-	}
-
-	public void updateScreenSize(int width, int height) {
-		if (video == null) {
-			video = new Video(width, height);
-		} else {
-			video.setSize(width, height);
-		}
-
 	}
 
 	public void addTouchEvent(float x, float y) {
@@ -519,6 +473,12 @@ public class GyroxMain {
 			multiplier = 4;
 			break;
 		}
+	}
+
+	@Override
+	public void nextState(StateID state) {
+		// TODO Auto-generated method stub
+		
 	}
 
 }
