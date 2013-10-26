@@ -11,21 +11,21 @@ import android.content.Context;
 public class Font {
 
 	// private int _nTextures;
-	public int _texwidth;
-	public int _width;
-	public int _lower;
-	public int _upper;
+	public int textureWidth;
+	public int width;
+	public int lower;
+	public int upper;
 
 	private GL10 gl;
 
-	private GLTexture Tex1;
-	private GLTexture Tex2;
+	private GLTexture t1;
+	private GLTexture t2;
 
 	public Font(GL10 gl1, Context context, int tex1, int tex2) {
 		gl = gl1;
-		Tex1 = new GLTexture(gl, context, tex1, GL10.GL_CLAMP_TO_EDGE,
+		t1 = new GLTexture(gl, context, tex1, GL10.GL_CLAMP_TO_EDGE,
 				GL10.GL_CLAMP_TO_EDGE, false);
-		Tex2 = new GLTexture(gl, context, tex2, GL10.GL_CLAMP_TO_EDGE,
+		t2 = new GLTexture(gl, context, tex2, GL10.GL_CLAMP_TO_EDGE,
 				GL10.GL_CLAMP_TO_EDGE, false);
 	}
 
@@ -49,22 +49,22 @@ public class Font {
 	}
 
 	private void renderString(String str) {
-		int w = _texwidth / _width;
-		float cw = (float) _width / (float) _texwidth;
+		int w = textureWidth / width;
+		float cw = (float) width / (float) textureWidth;
 		float cx, cy;
 		int i, index;
 		int tex;
 		int bound = -1;
 
 		float vertex[] = new float[6 * 2];
-		float textre[] = new float[6 * 2];
-		FloatBuffer vertexBuff;
-		FloatBuffer texBuff;
+		float texture[] = new float[6 * 2];
+		FloatBuffer vertexBuffer;
+		FloatBuffer textureBuffer;
 
 		for (i = 0; i < str.length(); i++) {
-			index = str.charAt(i) - _lower + 1;
+			index = str.charAt(i) - lower + 1;
 
-			if (index >= _upper)
+			if (index >= upper)
 				return; // index out of bounds
 
 			tex = index / (w * w);
@@ -72,9 +72,9 @@ public class Font {
 			// Bind texture
 			if (tex != bound) {
 				if (tex == 0)
-					gl.glBindTexture(GL10.GL_TEXTURE_2D, Tex1.getTextureID());
+					gl.glBindTexture(GL10.GL_TEXTURE_2D, t1.getTextureID());
 				else
-					gl.glBindTexture(GL10.GL_TEXTURE_2D, Tex2.getTextureID());
+					gl.glBindTexture(GL10.GL_TEXTURE_2D, t2.getTextureID());
 
 				gl.glTexEnvf(GL10.GL_TEXTURE_ENV, GL10.GL_TEXTURE_ENV_MODE,
 						GL10.GL_MODULATE);
@@ -87,41 +87,41 @@ public class Font {
 			cy = (float) (index / w) / (float) w;
 
 			// draw character
-			textre[0] = cx;
-			textre[1] = 1.0f - cy - cw;
+			texture[0] = cx;
+			texture[1] = 1.0f - cy - cw;
 			vertex[0] = (float) i;
 			vertex[1] = 0.0f;
 
-			textre[2] = cx + cw;
-			textre[3] = 1.0f - cy - cw;
+			texture[2] = cx + cw;
+			texture[3] = 1.0f - cy - cw;
 			vertex[2] = i + 1.0f;
 			vertex[3] = 0.0f;
 
-			textre[4] = cx + cw;
-			textre[5] = 1.0f - cy;
+			texture[4] = cx + cw;
+			texture[5] = 1.0f - cy;
 			vertex[4] = i + 1.0f;
 			vertex[5] = 1.0f;
 
-			textre[6] = cx + cw;
-			textre[7] = 1.0f - cy;
+			texture[6] = cx + cw;
+			texture[7] = 1.0f - cy;
 			vertex[6] = i + 1.0f;
 			vertex[7] = 1.0f;
 
-			textre[8] = cx;
-			textre[9] = 1.0f - cy;
+			texture[8] = cx;
+			texture[9] = 1.0f - cy;
 			vertex[8] = i;
 			vertex[9] = 1.0f;
 
-			textre[10] = cx;
-			textre[11] = 1.0f - cy - cw;
+			texture[10] = cx;
+			texture[11] = 1.0f - cy - cw;
 			vertex[10] = i;
 			vertex[11] = 0.0f;
 
-			vertexBuff = GraphicUtils.ConvToFloatBuffer(vertex);
-			texBuff = GraphicUtils.ConvToFloatBuffer(textre);
+			vertexBuffer = GraphicUtils.convToFloatBuffer(vertex);
+			textureBuffer = GraphicUtils.convToFloatBuffer(texture);
 
-			gl.glVertexPointer(2, GL10.GL_FLOAT, 0, vertexBuff);
-			gl.glTexCoordPointer(2, GL10.GL_FLOAT, 0, texBuff);
+			gl.glVertexPointer(2, GL10.GL_FLOAT, 0, vertexBuffer);
+			gl.glTexCoordPointer(2, GL10.GL_FLOAT, 0, textureBuffer);
 			gl.glDrawArrays(GL10.GL_TRIANGLES, 0, 6);
 
 		}

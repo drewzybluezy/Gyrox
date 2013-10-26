@@ -1,5 +1,3 @@
-
-
 package com.dmurphy.gyrox.model;
 
 import java.io.BufferedReader;
@@ -19,8 +17,8 @@ public class Material {
 	// members
 	ArrayList<MaterialData> materials = new ArrayList<MaterialData>();
 	
-	String Debug;
-	StringBuffer sb = new StringBuffer(40);
+	String debug;
+	StringBuffer stringBuffer = new StringBuffer(40);
 	
 	public enum ColourType {
 		E_AMBIENT,
@@ -40,8 +38,8 @@ public class Material {
 	}
 	
 	public Material(Context ctx, int resId) {
-		Debug = sb.append("Start Add Material, ").append(resId).toString();
-		Log.e("Material",Debug);
+		debug = stringBuffer.append("Start Add Material, ").append(resId).toString();
+		Log.e("Material",debug);
 		addMaterial(ctx,resId);
 	}
 	
@@ -122,39 +120,39 @@ public class Material {
 	}
 	
 	public FloatBuffer getAmbient(int mindex) {
-		FloatBuffer Ambient;
+		FloatBuffer ambient;
 		MaterialData mData = (MaterialData)(materials.get(mindex));
 		ByteBuffer bb = ByteBuffer.allocateDirect(4 * 4);
 		bb.order(ByteOrder.nativeOrder());
-		Ambient = bb.asFloatBuffer();
-		Ambient.put(mData.ambient);
-		Ambient.position(0);
+		ambient = bb.asFloatBuffer();
+		ambient.put(mData.ambient);
+		ambient.position(0);
 		
-		return Ambient;
+		return ambient;
 	}
 	
 	public FloatBuffer getDiffuse(int mindex) {
-		FloatBuffer Diffuse;
+		FloatBuffer diffuse;
 		MaterialData mData = (MaterialData)(materials.get(mindex));
 		ByteBuffer bb = ByteBuffer.allocateDirect(4 * 4);
 		bb.order(ByteOrder.nativeOrder());
-		Diffuse = bb.asFloatBuffer();
-		Diffuse.put(mData.diffuse);
-		Diffuse.position(0);
+		diffuse = bb.asFloatBuffer();
+		diffuse.put(mData.diffuse);
+		diffuse.position(0);
 		
-		return Diffuse; 
+		return diffuse; 
 	}
 	
 	public FloatBuffer getSpecular(int mindex) {
-		FloatBuffer Specular;
+		FloatBuffer specular;
 		MaterialData mData = (MaterialData)(materials.get(mindex));
 		ByteBuffer bb = ByteBuffer.allocateDirect(4 * 4);
 		bb.order(ByteOrder.nativeOrder());
-		Specular = bb.asFloatBuffer();
-		Specular.put(mData.specular);
-		Specular.position(0);
+		specular = bb.asFloatBuffer();
+		specular.put(mData.specular);
+		specular.position(0);
 
-		return Specular;
+		return specular;
 	}
 	
 	public float getShininess(int mindex) {
@@ -162,20 +160,20 @@ public class Material {
 		return mData.shininess;
 	}
 	
-	public void setMaterialColour(String name, ColourType Element, float[] colour) {
+	public void setMaterialColour(String name, ColourType element, float[] color) {
 		for(int i=0;i<materials.size();i++) {
 			MaterialData mData = (MaterialData)(materials.get(i));
 			if(name.compareTo(mData.name) == 0) {
 				for(int j=0;j<4;j++){
-					switch(Element) {
+					switch(element) {
 						case E_AMBIENT:
-							mData.ambient[j] = colour[j];
+							mData.ambient[j] = color[j];
 							break;
 						case E_DIFFUSE:
-							mData.diffuse[j] = colour[j];
+							mData.diffuse[j] = color[j];
 							break;
 						case E_SPECULAR:
-							mData.specular[j] = colour[j];
+							mData.specular[j] = color[j];
 							break;
 					}
 				}

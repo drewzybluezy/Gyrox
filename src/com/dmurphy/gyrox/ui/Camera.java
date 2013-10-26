@@ -12,17 +12,17 @@ import com.dmurphy.gyrox.util.GraphicUtils;
 
 public class Camera {
 
-	CamType _cameraType;
-	int _interpolated_cam;
-	int _interpolated_target;
-	int _coupled;
-	int _freedom[] = new int[3];
-	int _type;
+	CamType cameraType;
+	int interpolatedCam;
+	int interpolatedTarget;
+	int coupled;
+	int freedom[] = new int[3];
+	int type;
 	
-	Player _PlayerData;
+	Player player;
 	private Vec target = new Vec();
-	private Vec cam = new Vec();
-	float _movement[] = new float[4]; // indices CAM_R, CAM_CHI, CAM_PHI, CAM_PHI_OFFSET
+	private Vec camera = new Vec();
+	float movement[] = new float[4]; // indices CAM_R, CAM_CHI, CAM_PHI, CAM_PHI_OFFSET
 	
 	private static final float CAM_CIRCLE_DIST = 12.0f;
 	private static final float CAM_FOLLOW_DIST = 18.0f;
@@ -78,8 +78,8 @@ public class Camera {
 	}
 	
 	public Camera(Player PlayerData, CamType camtype) {
-		_cameraType = camtype;
-		_PlayerData = PlayerData;
+		cameraType = camtype;
+		player = PlayerData;
 		
 		switch(camtype) {
 			case E_CAM_TYPE_CIRCLING:
@@ -97,65 +97,65 @@ public class Camera {
 				break;
 		}
 		
-		getTarget().v[0] = PlayerData.getXpos();
-		getTarget().v[1] = PlayerData.getYpos();
+		getTarget().v[0] = PlayerData.getXCoord();
+		getTarget().v[1] = PlayerData.getYCoord();
 		getTarget().v[2] = 0.0f;
 		
-		getCam().v[0] = PlayerData.getXpos()  + CAM_CIRCLE_DIST;
-		getCam().v[1] = PlayerData.getYpos();
+		getCam().v[0] = PlayerData.getXCoord()  + CAM_CIRCLE_DIST;
+		getCam().v[1] = PlayerData.getYCoord();
 		getCam().v[2] = CAM_CIRCLE_Z;
 		
 	}
 	
 	public void updateType(CamType camtype) {
-		_cameraType = camtype;
-		_movement[CAM_R] = cam_defaults[camtype.ordinal()][CAM_R];
+		cameraType = camtype;
+		movement[CAM_R] = cam_defaults[camtype.ordinal()][CAM_R];
 	}
 	
 	private void initCircleCamera() {
-		_movement[CAM_R] = cam_defaults[0][CAM_R];
-		_movement[CAM_CHI] = cam_defaults[0][CAM_CHI];
-		_movement[CAM_PHI] = cam_defaults[0][CAM_PHI];
-		_movement[CAM_PHI_OFFSET] = 0.0f;
+		movement[CAM_R] = cam_defaults[0][CAM_R];
+		movement[CAM_CHI] = cam_defaults[0][CAM_CHI];
+		movement[CAM_PHI] = cam_defaults[0][CAM_PHI];
+		movement[CAM_PHI_OFFSET] = 0.0f;
 		
-		_interpolated_cam = 0;
-		_interpolated_target = 0;
-		_coupled = 0;
-		_freedom[CAM_FREE_R] = 1;
-		_freedom[CAM_FREE_PHI] = 0;
-		_freedom[CAM_FREE_CHI] = 1;
+		interpolatedCam = 0;
+		interpolatedTarget = 0;
+		coupled = 0;
+		freedom[CAM_FREE_R] = 1;
+		freedom[CAM_FREE_PHI] = 0;
+		freedom[CAM_FREE_CHI] = 1;
 	}
 	
 	private void initFollowCamera(CamType type) {
-		_movement[CAM_R] = cam_defaults[type.ordinal()][CAM_R];
-		_movement[CAM_CHI] = cam_defaults[type.ordinal()][CAM_CHI];
-		_movement[CAM_PHI] = cam_defaults[type.ordinal()][CAM_PHI];
-		_movement[CAM_PHI_OFFSET] = 0.0f;
+		movement[CAM_R] = cam_defaults[type.ordinal()][CAM_R];
+		movement[CAM_CHI] = cam_defaults[type.ordinal()][CAM_CHI];
+		movement[CAM_PHI] = cam_defaults[type.ordinal()][CAM_PHI];
+		movement[CAM_PHI_OFFSET] = 0.0f;
 		
-		_interpolated_cam = 1;
-		_interpolated_target = 0;
-		_coupled = 1;
-		_freedom[CAM_FREE_R] = 1;
-		_freedom[CAM_FREE_PHI] = 1;
-		_freedom[CAM_FREE_CHI] = 1;
+		interpolatedCam = 1;
+		interpolatedTarget = 0;
+		coupled = 1;
+		freedom[CAM_FREE_R] = 1;
+		freedom[CAM_FREE_PHI] = 1;
+		freedom[CAM_FREE_CHI] = 1;
 	}
 	
 	private void clampCam() {
-		if(_freedom[CAM_FREE_R] == 1) {
-			if(_movement[CAM_R] < CLAMP_R_MIN) {
-				_movement[CAM_R] = CLAMP_R_MIN;
+		if(freedom[CAM_FREE_R] == 1) {
+			if(movement[CAM_R] < CLAMP_R_MIN) {
+				movement[CAM_R] = CLAMP_R_MIN;
 			}
-			if(_movement[CAM_R] > CLAMP_R_MAX) {
-				_movement[CAM_R] = CLAMP_R_MAX;
+			if(movement[CAM_R] > CLAMP_R_MAX) {
+				movement[CAM_R] = CLAMP_R_MAX;
 			}
 		}
 		
-		if(_freedom[CAM_FREE_CHI] == 1) {
-			if(_movement[CAM_CHI] < CLAMP_CHI_MIN) {
-				_movement[CAM_CHI] = CLAMP_CHI_MIN;
+		if(freedom[CAM_FREE_CHI] == 1) {
+			if(movement[CAM_CHI] < CLAMP_CHI_MIN) {
+				movement[CAM_CHI] = CLAMP_CHI_MIN;
 			}
-			if(_movement[CAM_CHI] > CLAMP_CHI_MAX) {
-				_movement[CAM_CHI] = CLAMP_CHI_MAX;
+			if(movement[CAM_CHI] > CLAMP_CHI_MAX) {
+				movement[CAM_CHI] = CLAMP_CHI_MAX;
 			}
 		}
 	}
@@ -170,13 +170,13 @@ public class Camera {
 		
 		clampCam();
 
-		phi = _movement[CAM_PHI] + _movement[CAM_PHI_OFFSET];
-		chi = _movement[CAM_CHI];
-		r = _movement[CAM_R];
+		phi = movement[CAM_PHI] + movement[CAM_PHI_OFFSET];
+		chi = movement[CAM_CHI];
+		r = movement[CAM_R];
 		
-		if(_coupled == 1) {
+		if(coupled == 1) {
 			// do turn stuff here
-			time = CurrentTime - PlayerData.TurnTime;
+			time = CurrentTime - PlayerData.turnTime;
 			if(time < PlayerData.TURN_LENGTH) {
 				dir = PlayerData.getDirection();
 				ldir = PlayerData.getLastDirection();
@@ -194,17 +194,17 @@ public class Camera {
 			}
 		}
 		
-		x = PlayerData.getXpos();
-		y = PlayerData.getYpos();
+		x = PlayerData.getXCoord();
+		y = PlayerData.getYCoord();
 		
 		// position the camera
 		dest[0] = x + r * (float)Math.cos(phi) * (float)Math.sin(chi);
 		dest[1] = y + r * (float)Math.sin(phi) * (float)Math.sin(chi);
 		dest[2] = r * (float)Math.cos(chi);
 		
-		switch(_cameraType) {
+		switch(cameraType) {
 			case  E_CAM_TYPE_CIRCLING:
-				_movement[CAM_PHI] += CAM_SPEED * dt;
+				movement[CAM_PHI] += CAM_SPEED * dt;
 				tdest[0] = x;
 				tdest[1] = y;
 				tdest[2] = B_HEIGHT;
@@ -231,7 +231,7 @@ public class Camera {
 	}
 	
 	public FloatBuffer ReturnCamBuffer() {
-		return GraphicUtils.ConvToFloatBuffer(getCam().v);
+		return GraphicUtils.convToFloatBuffer(getCam().v);
 	}
 	
 	public void doCameraMovement(Player PlayerData, long CurrentTime, long dt) {
@@ -270,7 +270,7 @@ public class Camera {
 		m[2*4+3] = 0.0f;
 		m[3*4+3] = 1.0f;
 		
-		FloatBuffer M = GraphicUtils.ConvToFloatBuffer(m);
+		FloatBuffer M = GraphicUtils.convToFloatBuffer(m);
 		gl.glMultMatrixf(M);
 		
 		// Translate Eye to origin
@@ -278,11 +278,11 @@ public class Camera {
 	}
 
 	public Vec getCam() {
-		return cam;
+		return camera;
 	}
 
 	public void setCam(Vec cam) {
-		this.cam = cam;
+		this.camera = cam;
 	}
 
 	public Vec getTarget() {

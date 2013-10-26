@@ -12,33 +12,33 @@ import android.opengl.GLUtils;
 
 public class GLTexture {
 
-	int _texID[];
+	int textureID[];
 	boolean boGenMipMap = true;
 	
-	int WrapS;
-	int WrapT;
+	int wrapS;
+	int wrapT;
 	
-	public int DebugType;
+	public int debugType;
 	
 	public GLTexture(GL10 gl, Context context, int resource) {
-		WrapS = GL10.GL_REPEAT;
-		WrapT = GL10.GL_REPEAT;
-		_texID = new int[1];
+		wrapS = GL10.GL_REPEAT;
+		wrapT = GL10.GL_REPEAT;
+		textureID = new int[1];
 		loadTexture(gl,context,resource);
 	}
 
-	public GLTexture(GL10 gl, Context context, int resource, int wrap_s, int wrap_t) {
-		WrapS = wrap_s;
-		WrapT = wrap_t;
-		_texID = new int[1];
+	public GLTexture(GL10 gl, Context context, int resource, int wrapS, int wrapT) {
+		this.wrapS = wrapS;
+		this.wrapT = wrapT;
+		textureID = new int[1];
 		loadTexture(gl,context,resource);
 	}
 	
-	public GLTexture(GL10 gl, Context context, int resource, int wrap_s, int wrap_t, boolean mipMap) {
-		WrapS = wrap_s;
-		WrapT = wrap_t;
+	public GLTexture(GL10 gl, Context context, int resource, int wrapS, int wrapT, boolean mipMap) {
+		this.wrapS = wrapS;
+		this.wrapT = wrapT;
 		boGenMipMap = mipMap;
-		_texID = new int[1];
+		textureID = new int[1];
 		loadTexture(gl,context,resource);
 	}
 
@@ -46,7 +46,7 @@ public class GLTexture {
 	private void loadTexture(GL10 gl, Context context, int resource) {
 	    
 	    // In which ID will we be storing this texture?
-		gl.glGenTextures(1, _texID, 0);
+		gl.glGenTextures(1, textureID, 0);
 	    
 	    // We need to flip the textures vertically:
 	    Matrix flip = new Matrix();
@@ -62,7 +62,7 @@ public class GLTexture {
 	    Bitmap bmp = Bitmap.createBitmap(temp, 0, 0, temp.getWidth(), temp.getHeight(), flip, true);
 	    temp.recycle();
 	    
-	    gl.glBindTexture(GL10.GL_TEXTURE_2D, _texID[0]);
+	    gl.glBindTexture(GL10.GL_TEXTURE_2D, textureID[0]);
 	    
 	    // Set all of our texture parameters:
 	    if(boGenMipMap) {
@@ -73,10 +73,10 @@ public class GLTexture {
 	    	gl.glTexParameterf(GL10.GL_TEXTURE_2D, GL10.GL_TEXTURE_MIN_FILTER, GL10.GL_LINEAR);
 	    	gl.glTexParameterf(GL10.GL_TEXTURE_2D, GL10.GL_TEXTURE_MAG_FILTER, GL10.GL_LINEAR);
 	    }
-	    gl.glTexParameterf(GL10.GL_TEXTURE_2D, GL10.GL_TEXTURE_WRAP_S, WrapS);
-	    gl.glTexParameterf(GL10.GL_TEXTURE_2D, GL10.GL_TEXTURE_WRAP_T, WrapT);
+	    gl.glTexParameterf(GL10.GL_TEXTURE_2D, GL10.GL_TEXTURE_WRAP_S, wrapS);
+	    gl.glTexParameterf(GL10.GL_TEXTURE_2D, GL10.GL_TEXTURE_WRAP_T, wrapT);
 
-	    DebugType = GLUtils.getInternalFormat(bmp);
+	    debugType = GLUtils.getInternalFormat(bmp);
 	    
 	    // Generate, and load up all of the mipmaps:
 	    if(boGenMipMap) {
@@ -106,7 +106,7 @@ public class GLTexture {
 	}
 
 	public int getTextureID() {
-		return _texID[0];
+		return textureID[0];
 	}
 	
 }

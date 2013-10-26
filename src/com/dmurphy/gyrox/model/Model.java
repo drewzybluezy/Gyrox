@@ -23,7 +23,7 @@ public class Model {
 
 	// member vars
 	private Material mMaterials;
-	private int MaterialsCount[];
+	private int materialsCount[];
 	private float rawVertex[];
 	private FloatBuffer mVertexBuffer;
 	private FloatBuffer mNormalBuffer;
@@ -33,8 +33,8 @@ public class Model {
 	private Vec mBBoxSize;
 	private float mBBoxfRadius;
 	
-	String Debug;
-	StringBuffer sb = new StringBuffer(40);
+	String debug;
+	StringBuffer stringBuffer = new StringBuffer(40);
 	
 	private class face {
 		int vertex[] = new int[3];
@@ -156,14 +156,14 @@ public class Model {
 		
 		// Create an array of the size of the total number of materials
 		int numOfMaterials = mMaterials.getNumber();
-		MaterialsCount = new int[numOfMaterials];
+		materialsCount = new int[numOfMaterials];
 		
 		for(int x=0; x<numOfMaterials; x++) {
-			MaterialsCount[x] = 0;
+			materialsCount[x] = 0;
 		}
 		
 		for(int x=0; x<numOfFaces; x++) {
-			MaterialsCount[faceArray[x].material] += 1;
+			materialsCount[faceArray[x].material] += 1;
 		}
 		
 		// Combine vectors and normals for each vertex
@@ -236,11 +236,11 @@ public class Model {
 		short tempIndices[];
 		
 		for(int i=0;i<numOfMaterials;i++) {
-			ByteBuffer ibb = ByteBuffer.allocateDirect(2 * 3 * MaterialsCount[i]);
+			ByteBuffer ibb = ByteBuffer.allocateDirect(2 * 3 * materialsCount[i]);
 			ibb.order(ByteOrder.nativeOrder());
 			mIndicesBuffer[i] = ibb.asShortBuffer();
 			tempface[i] = 0;
-			Indices.add(new short[MaterialsCount[i] * 3]);
+			Indices.add(new short[materialsCount[i] * 3]);
 		}
 		
 		for(int i=0;i<numOfFaces;i++) {
@@ -357,13 +357,13 @@ public class Model {
 					normal[1] = mNormalBuffer.get((3 * indices) + 1);
 					normal[2] = mNormalBuffer.get((3 * indices) + 2);
 					
-					Normals = GraphicUtils.ConvToFloatBuffer(normal);
+					Normals = GraphicUtils.convToFloatBuffer(normal);
 					
 					vertex[0] = rawVertex[3 * indices];
 					vertex[1] = rawVertex[(3 * indices) + 1];
 					vertex[2] = rawVertex[(3 * indices) + 2];
 					
-					Vertex = GraphicUtils.ConvToFloatBuffer(vertex);
+					Vertex = GraphicUtils.convToFloatBuffer(vertex);
 					
 					gl.glVertexPointer(3, GL10.GL_FLOAT, 0, Vertex);
 					gl.glNormalPointer(GL10.GL_FLOAT, 0, Normals);

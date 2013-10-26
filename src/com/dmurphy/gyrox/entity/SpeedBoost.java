@@ -1,44 +1,32 @@
 package com.dmurphy.gyrox.entity;
 
 import java.nio.FloatBuffer;
-import java.util.Random;
 
 import javax.microedition.khronos.opengles.GL10;
 
 import com.dmurphy.gyrox.model.Model;
 import com.dmurphy.gyrox.model.Segment;
-import com.dmurphy.gyrox.model.Vec;
 import com.dmurphy.gyrox.util.GraphicUtils;
 import com.dmurphy.gyrox.world.Lighting;
-import com.dmurphy.gyrox.world.Lighting.LightType;
 
 public class SpeedBoost {
 
 private Model model;
-	
-	private final Random rand = new Random();
 	private int trailOffset;
 	
 	private Segment[] trails = new Segment[1000] ;
 	
-	FloatBuffer white_fb;
-	FloatBuffer posWorld0_fb;
+	FloatBuffer whiteBuffer;
+	FloatBuffer worldBuffer;
 	
 	private static final float white[] = { 1.0f, 1.0f, 1.0f, 1.0f };
-	private static final float posWorld0[] = {0.5f, 0.5f, 1.0f, 0.0f};
-	
-	private final int LOD_DIST[][] = {
-			{ 1000, 1000, 1000 },
-			{100, 200, 400},
-			{30,100,200},
-			{10,30,150}
-	};
+	private static final float world[] = {0.5f, 0.5f, 1.0f, 0.0f};
 	
 	public SpeedBoost(float gridSize, Model mesh, float x, float y) {
 		model = mesh;
 		
-		white_fb = GraphicUtils.ConvToFloatBuffer(white);
-		posWorld0_fb = GraphicUtils.ConvToFloatBuffer(posWorld0);
+		whiteBuffer = GraphicUtils.convToFloatBuffer(white);
+		worldBuffer = GraphicUtils.convToFloatBuffer(world);
 		
 		trails[0] = new Segment();
 		trailOffset = 0;
@@ -55,10 +43,10 @@ private Model model;
 		gl.glEnable(GL10.GL_LIGHTING);
 		gl.glEnable(GL10.GL_LIGHT2);
 		
-		gl.glLightfv(GL10.GL_LIGHT2, GL10.GL_POSITION, posWorld0_fb);
-		gl.glLightfv(GL10.GL_LIGHT2, GL10.GL_AMBIENT, white_fb);
-		gl.glLightfv(GL10.GL_LIGHT2, GL10.GL_SPECULAR, white_fb);
-		gl.glLightfv(GL10.GL_LIGHT2, GL10.GL_DIFFUSE, white_fb);
+		gl.glLightfv(GL10.GL_LIGHT2, GL10.GL_POSITION, worldBuffer);
+		gl.glLightfv(GL10.GL_LIGHT2, GL10.GL_AMBIENT, whiteBuffer);
+		gl.glLightfv(GL10.GL_LIGHT2, GL10.GL_SPECULAR, whiteBuffer);
+		gl.glLightfv(GL10.GL_LIGHT2, GL10.GL_DIFFUSE, whiteBuffer);
 		
 		gl.glEnable(GL10.GL_DEPTH_TEST);
 		gl.glDepthMask(true);

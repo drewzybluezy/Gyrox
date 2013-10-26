@@ -34,13 +34,13 @@ public class Lighting {
 	}
 	
 	public Lighting() {
-		white_fb = GraphicUtils.ConvToFloatBuffer(white);
-		gray66_fb = GraphicUtils.ConvToFloatBuffer(gray66);
-		gray10_fb = GraphicUtils.ConvToFloatBuffer(gray10);
-		black_fb = GraphicUtils.ConvToFloatBuffer(black);
-		posWorld0_fb = GraphicUtils.ConvToFloatBuffer(posWorld0);
-		posWorld1_fb = GraphicUtils.ConvToFloatBuffer(posWorld1);
-		posCycles_fb = GraphicUtils.ConvToFloatBuffer(posCycles);
+		white_fb = GraphicUtils.convToFloatBuffer(white);
+		gray66_fb = GraphicUtils.convToFloatBuffer(gray66);
+		gray10_fb = GraphicUtils.convToFloatBuffer(gray10);
+		black_fb = GraphicUtils.convToFloatBuffer(black);
+		posWorld0_fb = GraphicUtils.convToFloatBuffer(posWorld0);
+		posWorld1_fb = GraphicUtils.convToFloatBuffer(posWorld1);
+		posCycles_fb = GraphicUtils.convToFloatBuffer(posCycles);
 		
 	}
 	

@@ -4,12 +4,10 @@ import java.util.Random;
 
 import javax.microedition.khronos.opengles.GL10;
 
-import com.dmurphy.gyrox.model.GLTexture;
 import com.dmurphy.gyrox.model.Model;
 import com.dmurphy.gyrox.model.Segment;
 import com.dmurphy.gyrox.model.Vec;
 import com.dmurphy.gyrox.ui.Camera;
-import com.dmurphy.gyrox.ui.HUD;
 import com.dmurphy.gyrox.world.Lighting;
 
 public class Note {
@@ -33,7 +31,7 @@ public class Note {
 			{10,30,150}
 	};
 	
-	private final float ColourDiffuse[][] = {
+	private final float cDiffuse[][] = {
 			{ 0.0f, 0.1f, 0.900f, 1.000f},      // Blue
 			{ 1.00f, 0.550f, 0.140f, 1.000f},   // Yellow
 			{ 0.750f, 0.020f, 0.020f, 1.000f},  // Red
@@ -44,7 +42,7 @@ public class Note {
 			
 	};
 	
-	private final float ColourSpecular[][] = {
+	private final float cSpecular[][] = {
 			{ 0.0f, 0.1f, 0.900f, 1.000f},    // Blue
 			{0.500f, 0.500f, 0.000f, 1.000f}, // Yellow
 			{0.750f, 0.020f, 0.020f, 1.000f}, // Red
@@ -80,7 +78,7 @@ public class Note {
 		gl.glScalef(0.2f, 0.2f, 0.2f);
 		gl.glRotatef(zRot, 0, 0, 1);
 		gl.glEnable(GL10.GL_CULL_FACE);
-		model.draw(gl,ColourSpecular[diffuse],ColourDiffuse[specular]);
+		model.draw(gl,cSpecular[diffuse],cDiffuse[specular]);
 		gl.glDisable(GL10.GL_CULL_FACE);
 		
 		gl.glDisable(GL10.GL_BLEND);
@@ -93,7 +91,7 @@ public class Note {
 		Vec v1;
 		Vec v2;
 		Vec tmp = new Vec(getXpos(),getYpos(),0.0f);
-		int lod_level = 2;
+		int levelOfDetail = 2;
 		float d,s;
 		int i;
 		int LC_LOD = 3;
@@ -108,7 +106,7 @@ public class Note {
 		
 		d = v2.length();
 		
-		for(i=0;i<LC_LOD && d >= LOD_DIST[lod_level][i]; i++);
+		for(i=0;i<LC_LOD && d >= LOD_DIST[levelOfDetail][i]; i++);
 		
 		if(i >= LC_LOD) {
 			retValue = false;

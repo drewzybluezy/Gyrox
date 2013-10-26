@@ -1,5 +1,3 @@
-
-
 package com.dmurphy.gyrox.game;
 
 import com.dmurphy.gyrox.util.Preferences;
@@ -7,6 +5,7 @@ import com.dmurphy.gyrox.view.OpenGLView;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Point;
 import android.os.Bundle;
 import android.view.Display;
 import android.view.KeyEvent;
@@ -15,18 +14,20 @@ import android.view.WindowManager;
 
 public class GyroxLauncher extends Activity {
     /** Called when the activity is first created. */
-	private OpenGLView _View;
+	private OpenGLView view;
 	
-	private Boolean _FocusChangeFalseSeen = false;
-	private Boolean _Resume = false;
+	private Boolean focusChangeFalseSeen = false;
+	private Boolean resume = false;
 	
     @Override
     public void onCreate(Bundle savedInstanceState) {
         
 		WindowManager w = getWindowManager();
 	    Display d = w.getDefaultDisplay();
-	    int width = d.getWidth();
-	    int height = d.getHeight();
+	    Point p = new Point();
+	    d.getSize(p);
+	    int width = p.x;
+	    int height = p.y;
 	   
 	    super.onCreate(savedInstanceState);
 	    
@@ -34,39 +35,39 @@ public class GyroxLauncher extends Activity {
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
         WindowManager.LayoutParams.FLAG_FULLSCREEN);
 	    
-        _View = new OpenGLView(this, width, height);
-        setContentView(_View);
+        view = new OpenGLView(this, width, height);
+        setContentView(view);
 
     }
     
     
     @Override
     public void onPause() {
-    	_View.onPause();
+    	view.onPause();
     	super.onPause();
     }
     
     @Override
     public void onResume() {
-    	if(!_FocusChangeFalseSeen) {
-    		_View.onResume();
+    	if(!focusChangeFalseSeen) {
+    		view.onResume();
     	}
-    	_Resume = true;
+    	resume = true;
     	super.onResume();
     }
     
     @Override
     public void onWindowFocusChanged(boolean focus) {
     	if(focus) {
-    		if(_Resume) {
-    			_View.onResume();
+    		if(resume) {
+    			view.onResume();
     		}
     		
-    		_Resume = false;
-    		_FocusChangeFalseSeen = false;
+    		resume = false;
+    		focusChangeFalseSeen = false;
     	}
     	else {
-    		_FocusChangeFalseSeen = true;
+    		focusChangeFalseSeen = true;
     	}
     }   
     

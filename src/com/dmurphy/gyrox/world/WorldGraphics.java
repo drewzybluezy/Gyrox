@@ -47,9 +47,9 @@ public class WorldGraphics {
 		t = l / 12;
 		float florTexCoords [] = {0.0f, 0.0f,  t,0.0f,   0.0f,t,  t,t};
 
-		_FloorTexBuffer = GraphicUtils.ConvToFloatBuffer(florTexCoords);
-		_TexBuffer = GraphicUtils.ConvToFloatBuffer(texCoords);
-		_IndicesBuffer = GraphicUtils.ConvToByteBuffer(indices);
+		_FloorTexBuffer = GraphicUtils.convToFloatBuffer(florTexCoords);
+		_TexBuffer = GraphicUtils.convToFloatBuffer(texCoords);
+		_IndicesBuffer = GraphicUtils.convToByteBuffer(indices);
 		_NumOfIndices = indices.length;
 		
 	}
@@ -72,7 +72,7 @@ public class WorldGraphics {
 		  { -d, -d, -d, -d, d, -d,    -d, d, d,    -d, -d, d } };/* back */
 
 		for(int i=0; i<6; i++) {
-			_SkyBoxVertexBuffers[i] = GraphicUtils.ConvToFloatBuffer(sides[i]);
+			_SkyBoxVertexBuffers[i] = GraphicUtils.convToFloatBuffer(sides[i]);
 		}
 	}
 	
@@ -108,10 +108,10 @@ public class WorldGraphics {
 			}
 		};
 		
-		_WallVertexBuffer[0] = GraphicUtils.ConvToFloatBuffer(WallVertices[0]);
-		_WallVertexBuffer[1] = GraphicUtils.ConvToFloatBuffer(WallVertices[1]);
-		_WallVertexBuffer[2] = GraphicUtils.ConvToFloatBuffer(WallVertices[2]);
-		_WallVertexBuffer[3] = GraphicUtils.ConvToFloatBuffer(WallVertices[3]);
+		_WallVertexBuffer[0] = GraphicUtils.convToFloatBuffer(WallVertices[0]);
+		_WallVertexBuffer[1] = GraphicUtils.convToFloatBuffer(WallVertices[1]);
+		_WallVertexBuffer[2] = GraphicUtils.convToFloatBuffer(WallVertices[2]);
+		_WallVertexBuffer[3] = GraphicUtils.convToFloatBuffer(WallVertices[3]);
 		
 	}
 	
@@ -174,7 +174,7 @@ public class WorldGraphics {
 				rawVertices[10] = (float)(j + l);
 				rawVertices[11] = 0.0f;
 
-				FloatBuffer VertexBuffer = GraphicUtils.ConvToFloatBuffer(rawVertices);
+				FloatBuffer VertexBuffer = GraphicUtils.convToFloatBuffer(rawVertices);
 				
 				gl.glEnableClientState(GL10.GL_VERTEX_ARRAY);
 				gl.glEnableClientState(GL10.GL_TEXTURE_COORD_ARRAY);

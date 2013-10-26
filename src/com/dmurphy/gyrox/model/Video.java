@@ -4,37 +4,33 @@ import javax.microedition.khronos.opengles.GL10;
 
 public class Video {
 
-	float height, width;
-	int x, y;
-	public int h, w;
-
-	public int rawHeight, rawWidth;
+	float rawHeight, rawWidth;
+	int vX, vY;
+	public int vH;
+	public int vW;
 
 	int _onScreen;
 
 	public Video(int width, int height) {
 		setSize(width, height);
-		x = 0;
-		y = 0;
-		w = Float.floatToIntBits(width);
-		h = Float.floatToIntBits(height);
+		vX = 0;
+		vY = 0;
+		vW = Float.floatToIntBits(rawWidth);
+		vH = Float.floatToIntBits(rawHeight);
 	}
 
 	public void setSize(int width, int height) {
-		this.height = Float.intBitsToFloat(height);
-		this.width = Float.intBitsToFloat(width);
-
-		this.rawHeight = height;
-		this.rawWidth = width;
+		rawHeight = Float.intBitsToFloat(height);
+		rawWidth = Float.intBitsToFloat(width);
 	}
 
 	public void rasOnly(GL10 gl) {
 		gl.glMatrixMode(GL10.GL_PROJECTION);
 		gl.glLoadIdentity();
-		gl.glOrthof(0.0f, (float) w, 0.0f, (float) h, 0.0f, 1.0f);
+		gl.glOrthof(0.0f, (float) vW, 0.0f, (float) vH, 0.0f, 1.0f);
 		gl.glMatrixMode(GL10.GL_MODELVIEW);
 		gl.glLoadIdentity();
-		gl.glViewport(0, 0, w, h);
+		gl.glViewport(0, 0, vW, vH);
 	}
 
 	public void doPerspective(GL10 gl, float GridSize) {
@@ -42,7 +38,7 @@ public class Video {
 
 		float top;
 		float left;
-		float ratio = width / height;
+		float ratio = rawWidth / rawHeight;
 		float znear = 1.0f;
 		float zfar = (float) (GridSize * 6.5f);
 		float fov = 105.0f;
@@ -53,26 +49,18 @@ public class Video {
 		left = (float) (((float) -top) * ((float) ratio));
 		gl.glFrustumf(left, -left, -top, top, znear, zfar);
 
-		w = Float.floatToIntBits(width);
-		h = Float.floatToIntBits(height);
+		w = Float.floatToIntBits(rawWidth);
+		h = Float.floatToIntBits(rawHeight);
 		gl.glViewport(0, 0, w, h);
 
 	}
 
 	public int getWidth() {
-		return Float.floatToIntBits(width);
+		return Float.floatToIntBits(rawWidth);
 	}
 
 	public int getHeight() {
-		return Float.floatToIntBits(height);
-	}
-
-	public int getRawHeight() {
-		return rawHeight;
-	}
-
-	public int getRawWidth() {
-		return rawWidth;
+		return Float.floatToIntBits(rawHeight);
 	}
 
 }
