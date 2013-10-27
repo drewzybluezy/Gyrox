@@ -29,8 +29,8 @@ public class Model {
 	private FloatBuffer mNormalBuffer;
 	private ShortBuffer mIndicesBuffer[];
 	private int mNumOfVertices;
-	private Vec mBBoxMin;
-	private Vec mBBoxSize;
+	private Vector mBBoxMin;
+	private Vector mBBoxSize;
 	private float mBBoxfRadius;
 	
 	String debug;
@@ -376,33 +376,33 @@ public class Model {
 	
 	private void computeBBox() {
 		int i, j;
-		Vec vMin = new Vec(rawVertex[0],rawVertex[1],rawVertex[2]);
-		Vec vMax = new Vec(rawVertex[0],rawVertex[1],rawVertex[2]);
-		Vec vSize = new Vec();
+		Vector vMin = new Vector(rawVertex[0],rawVertex[1],rawVertex[2]);
+		Vector vMax = new Vector(rawVertex[0],rawVertex[1],rawVertex[2]);
+		Vector vSize = new Vector();
 		
 		for(i=0; i<mNumOfVertices; i++) {
 			for(j=0; j<3; j++) {
-				if(vMin.v[j] > rawVertex[3 * i + j]) {
-					vMin.v[j] = rawVertex[3 * i + j];
+				if(vMin.point[j] > rawVertex[3 * i + j]) {
+					vMin.point[j] = rawVertex[3 * i + j];
 				}
-				if(vMax.v[j] < rawVertex[3 * i + j]) {
-					vMax.v[j] = rawVertex[3 * i + j];
+				if(vMax.point[j] < rawVertex[3 * i + j]) {
+					vMax.point[j] = rawVertex[3 * i + j];
 				}
 			}
 		}
 		
-		vSize = vMax.sub(vMin);
+		vSize = vMax.subtract(vMin);
 		mBBoxMin = vMin;
 		mBBoxSize = vSize;
 		mBBoxfRadius = vSize.length() / 10.0f;
 		
 	}
 	
-	public Vec getBBoxSize() {
+	public Vector getBBoxSize() {
 		return mBBoxSize;
 	}
 	
-	public Vec getBBoxMin() {
+	public Vector getBBoxMin() {
 		return mBBoxMin;
 	}
 

@@ -8,13 +8,12 @@ import android.content.Context;
 import android.os.SystemClock;
 
 import com.dmurphy.gyrox.R;
-import com.dmurphy.gyrox.entity.Note;
+import com.dmurphy.gyrox.entity.Pickup;
 import com.dmurphy.gyrox.entity.Player;
 import com.dmurphy.gyrox.entity.SpeedBoost;
 import com.dmurphy.gyrox.game.StateManager.StateID;
 import com.dmurphy.gyrox.model.GLTexture;
 import com.dmurphy.gyrox.model.Model;
-import com.dmurphy.gyrox.model.Segment;
 import com.dmurphy.gyrox.model.Video;
 import com.dmurphy.gyrox.sound.SoundManager;
 import com.dmurphy.gyrox.ui.Camera;
@@ -76,7 +75,7 @@ public class GameState implements State {
 	public static final float DIMINISHING_RETURNS = 0.75f;
 
 	private static Player player;
-	public static ArrayList<Note> notes = new ArrayList<Note>();
+	public static ArrayList<Pickup> pickups = new ArrayList<Pickup>();
 	public static ArrayList<SpeedBoost> boost = new ArrayList<SpeedBoost>();
 
 	// Camera data
@@ -100,15 +99,10 @@ public class GameState implements State {
 	Context mContext;
 	GL10 gl;
 
-	public Segment walls[] = { new Segment(), new Segment(), new Segment(),
-			new Segment() };
-
 	// Preferences
 	public static UserPrefs mPrefs;
 
 	public void init(Context ctx, GL10 gl, Video video) {
-		initWalls();
-		
 		this.gl = gl;
 		this.mContext = ctx;
 		this.video = video;
@@ -294,31 +288,13 @@ public class GameState implements State {
 			endDelay = DELAY_LENGTH;
 		gameOver = true;
 		player.setSpeed(0);
-		notes.clear();
+		pickups.clear();
 		boost.clear();
-	}
-
-	private void initWalls() {
-		float raw[][] = { { 0.0f, 0.0f, 1.0f, 0.0f },
-				{ 1.0f, 0.0f, 0.0f, 1.0f }, { 1.0f, 1.0f, -1.0f, 0.0f },
-				{ 0.0f, 1.0f, 0.0f, -1.0f } };
-
-		float width = mCurrentGridSize;
-		float height = mCurrentGridSize;
-
-		int j;
-
-		for (j = 0; j < 4; j++) {
-			walls[j].vStart.v[0] = raw[j][0] * width;
-			walls[j].vStart.v[1] = raw[j][1] * height;
-			walls[j].vDirection.v[0] = raw[j][2] * width;
-			walls[j].vDirection.v[1] = raw[j][3] * height;
-		}
 	}
 
 	private void render() {
 		if (!initialState) {
-			player.doMovement(timeDelta, timeCurrent, walls);
+			player.doMovement(timeDelta, timeCurrent);
 		}
 
 		camera.doCameraMovement(player, timeCurrent, timeDelta);
@@ -359,7 +335,7 @@ public class GameState implements State {
 
 		if (!gameOver) {
 			for (int i = 0; i < mCurrentPickups; i++) {
-				notes.get(i).draw(gl, lights, timeDelta);
+				pickups.get(i).draw(gl, lights, timeDelta);
 			}
 			for (int i = 0; i < boost.size(); i++) {
 				boost.get(i).draw(gl, lights);
@@ -370,7 +346,7 @@ public class GameState implements State {
 	}
 
 	public static void removePickup(int i) {
-		notes.remove(i);
+		pickups.remove(i);
 		mCurrentPickups--;
 	}
 
@@ -384,7 +360,7 @@ public class GameState implements State {
 		timeLeft += TIME_LIMIT;
 
 		for (int i = 0; i < numberToSpawn; i++) {
-			notes.add(new Note(mCurrentGridSize, noteModel));
+			pickups.add(new Pickup(mCurrentGridSize, noteModel));
 		}
 
 		mCurrentPickups = numberToSpawn;
@@ -416,10 +392,6 @@ public class GameState implements State {
 		}
 
 		mCurrentGridSize = mPrefs.gridSize();
-
-		// re-init the world
-		initWalls();
-
 		world = new WorldGraphics(gl, mContext, mCurrentGridSize);
 
 		// Setup perspective
@@ -436,7 +408,7 @@ public class GameState implements State {
 		hud.displayInstr(true);
 
 		for (int i = 0; i < numberToSpawn; i++) {
-			notes.add(new Note(mCurrentGridSize, noteModel));
+			pickups.add(new Pickup(mCurrentGridSize, noteModel));
 		}
 
 		boost.add(new SpeedBoost(mCurrentGridSize, boostModel, 0.5f, 0.5f));
@@ -478,7 +450,7 @@ public class GameState implements State {
 	@Override
 	public void nextState(StateID state) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 }
