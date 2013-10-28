@@ -5,7 +5,6 @@ import java.util.ArrayList;
 import javax.microedition.khronos.opengles.GL10;
 
 import com.dmurphy.gyrox.game.GameState;
-import com.dmurphy.gyrox.model.GLTexture;
 import com.dmurphy.gyrox.model.Model;
 import com.dmurphy.gyrox.model.Vector;
 import com.dmurphy.gyrox.ui.Camera;
@@ -80,8 +79,7 @@ public class Player {
 		}
 	}
 
-	public void drawCycle(GL10 gl, long time, long timeDelta, Lighting lights,
-			GLTexture explosionTexture) {
+	public void draw(GL10 gl, long time, long timeDelta, Lighting lights) {
 		gl.glPushMatrix();
 		gl.glTranslatef(getXCoord(), getYCoord(), 0.0f);
 

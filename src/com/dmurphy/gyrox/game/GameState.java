@@ -12,7 +12,6 @@ import com.dmurphy.gyrox.entity.Pickup;
 import com.dmurphy.gyrox.entity.Player;
 import com.dmurphy.gyrox.entity.SpeedBoost;
 import com.dmurphy.gyrox.game.StateManager.StateID;
-import com.dmurphy.gyrox.model.GLTexture;
 import com.dmurphy.gyrox.model.Model;
 import com.dmurphy.gyrox.model.Video;
 import com.dmurphy.gyrox.sound.SoundManager;
@@ -55,9 +54,6 @@ public class GameState implements State {
 	public static int numberToSpawn;
 
 	public static boolean gameOver = false;
-
-	// Define game textures
-	private GLTexture explodeTex;
 
 	private Model playerModel;
 	private Model noteModel;
@@ -122,8 +118,6 @@ public class GameState implements State {
 		playerModel = new Model(mContext, R.raw.justicar);
 		noteModel = new Model(mContext, R.raw.noteobj);
 		boostModel = new Model(mContext, R.raw.arrow);
-
-		explodeTex = new GLTexture(gl, mContext, R.drawable.impact);
 
 		newGame();
 
@@ -321,17 +315,15 @@ public class GameState implements State {
 		gl.glDisable(GL10.GL_DEPTH_TEST);
 
 		world.drawSkyBox(gl);
-		world.drawFloorTextured(gl);
+		//world.drawFloorTextured(gl);
 
 		gl.glDepthMask(true);
 		gl.glEnable(GL10.GL_DEPTH_TEST);
 
-		world.drawWalls(gl);
-
 		lights.setupLights(gl, LightType.E_CYCLE_LIGHTS);
 
 		if (player.isVisible(camera))
-			player.drawCycle(gl, timeCurrent, timeDelta, lights, explodeTex);
+			player.draw(gl, timeCurrent, timeDelta, lights);
 
 		if (!gameOver) {
 			for (int i = 0; i < mCurrentPickups; i++) {
@@ -410,8 +402,6 @@ public class GameState implements State {
 		for (int i = 0; i < numberToSpawn; i++) {
 			pickups.add(new Pickup(mCurrentGridSize, noteModel));
 		}
-
-		boost.add(new SpeedBoost(mCurrentGridSize, boostModel, 0.5f, 0.5f));
 		boost.add(new SpeedBoost(mCurrentGridSize, boostModel, 0.25f, 0.25f));
 		boost.add(new SpeedBoost(mCurrentGridSize, boostModel, 0.25f, 0.75f));
 		boost.add(new SpeedBoost(mCurrentGridSize, boostModel, 0.75f, 0.25f));
