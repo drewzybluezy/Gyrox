@@ -136,6 +136,7 @@ public class HUD {
 		sb.append("FINAL SCORE: ");
 		sb.append(score);
 			
+		gl.glColor4f(1.0f, 0.4f, 0.2f, 1.0f);
 		font.drawText(5, 
 					Visual.vH / 2, 
 					(Visual.vW / (6 / 4 * sb.length())), 

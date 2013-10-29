@@ -226,8 +226,8 @@ public class Player {
 							+ Math.pow(this.getYCoord()
 									- pickups.get(j).getYCoord(), 2));
 
-			if (dist <= (mesh.getBBoxRadius() + (pickups.get(j).getModel()
-					.getBBoxRadius()))) {
+			if (dist <= (mesh.getBBoxRadius() + ((pickups.get(j).getModel()
+					.getBBoxRadius()*3)))) {
 				GameState.removePickup(j);
 				this.addScore(10 * GameState.getMultiplier());
 				GameState.playPickup();

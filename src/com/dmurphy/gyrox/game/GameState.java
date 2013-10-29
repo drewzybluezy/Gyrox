@@ -56,7 +56,7 @@ public class GameState implements State {
 	public static boolean gameOver = false;
 
 	private Model playerModel;
-	private Model noteModel;
+	private Model pickupModel;
 	private Model boostModel;
 
 	private Video video;
@@ -109,14 +109,14 @@ public class GameState implements State {
 		SoundManager.addSound(CRASH_SOUND, R.raw.game_crash);
 		SoundManager.addSound(PICKUP_SOUND, R.raw.pickup);
 		SoundManager.addSound(BOOST_SOUND, R.raw.speed);
-		SoundManager.addMusic(R.raw.contact);
+		SoundManager.addMusic(R.raw.motherboard);
 
 		// Load HUD
 		hud = new HUD(gl, mContext);
 
 		// Load Models
 		playerModel = new Model(mContext, R.raw.justicar);
-		noteModel = new Model(mContext, R.raw.noteobj);
+		pickupModel = new Model(mContext, R.raw.star);
 		boostModel = new Model(mContext, R.raw.arrow);
 
 		newGame();
@@ -352,7 +352,7 @@ public class GameState implements State {
 		timeLeft += TIME_LIMIT;
 
 		for (int i = 0; i < numberToSpawn; i++) {
-			pickups.add(new Pickup(mCurrentGridSize, noteModel));
+			pickups.add(new Pickup(mCurrentGridSize, pickupModel));
 		}
 
 		mCurrentPickups = numberToSpawn;
@@ -400,7 +400,7 @@ public class GameState implements State {
 		hud.displayInstr(true);
 
 		for (int i = 0; i < numberToSpawn; i++) {
-			pickups.add(new Pickup(mCurrentGridSize, noteModel));
+			pickups.add(new Pickup(mCurrentGridSize, pickupModel));
 		}
 		boost.add(new SpeedBoost(mCurrentGridSize, boostModel, 0.25f, 0.25f));
 		boost.add(new SpeedBoost(mCurrentGridSize, boostModel, 0.25f, 0.75f));

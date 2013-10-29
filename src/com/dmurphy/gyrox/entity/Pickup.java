@@ -62,7 +62,6 @@ public class Pickup {
 		gl.glDepthMask(true);
 		gl.glEnable(GL10.GL_NORMALIZE);
 		gl.glTranslatef(0.0f, 0.0f, model.getBBoxSize().point[2] / 8f);
-		gl.glScalef(0.2f, 0.2f, 0.2f);
 		gl.glRotatef(zRot, 0, 0, 1);
 		gl.glEnable(GL10.GL_CULL_FACE);
 		model.draw(gl, cSpecular[diffuse], cDiffuse[specular]);

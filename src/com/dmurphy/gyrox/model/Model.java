@@ -270,11 +270,11 @@ public class Model {
 		mMaterials.setMaterialColour("Hull", ColourType.E_AMBIENT, ambient_color);
 		mMaterials.setMaterialColour("Hull", ColourType.E_DIFFUSE, diffuse_color);
 		
-		mMaterials.setMaterialColour("NoteMat", ColourType.E_AMBIENT, ambient_color);
-		mMaterials.setMaterialColour("NoteMat", ColourType.E_DIFFUSE, diffuse_color);
+		mMaterials.setMaterialColour("StarMat", ColourType.E_AMBIENT, ambient_color);
+		mMaterials.setMaterialColour("StarMat", ColourType.E_DIFFUSE, diffuse_color);
 		
 		float[] v = {0.04985f, 0.228f, 0.281f, 5.0f};
-		mMaterials.setEmission("NoteMat", v);
+		mMaterials.setEmission("StarMat", v);
 		mMaterials.setEmission("cockpit", v);
 		mMaterials.setEmission("flame", v);
 		draw(gl);
